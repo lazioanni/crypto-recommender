@@ -78,8 +78,14 @@ public class TradingStatisticsService {
      */
     public List<CryptoNormalizedRangeDTO> getNormalizedRangeDesc() {
         return Arrays.stream(SupportedCryptos.values())
-                .map(coin -> buildCryptoNormalizedRangeDTO(coin.name(),this.csvReaderService.records))
+                .map(coin -> {
+                    List<TradingRecord> coinRecords = this.csvReaderService.records.stream()
+                            .filter(record -> record.getSymbol().equals(coin.name()))
+                            .collect(Collectors.toList());
+                    return buildCryptoNormalizedRangeDTO(coin.name(), coinRecords);
+                })
                 .sorted(Comparator.comparing(CryptoNormalizedRangeDTO::getNormalizedRange).reversed())
                 .collect(Collectors.toList());
     }
+
 }

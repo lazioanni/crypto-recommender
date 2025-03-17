@@ -56,7 +56,7 @@ public class TradingRecordUtil {
      * Finds the newest trading record.
      *
      * @param records the list of {@link TradingRecord} to search
-     * @return the {@link TradingRecord} representing the newest record,  or null
+     * @return the {@link TradingRecord} representing the newest record, or null
      */
     public static TradingRecord findNewestRecord(List<TradingRecord> records) {
         return records.stream()

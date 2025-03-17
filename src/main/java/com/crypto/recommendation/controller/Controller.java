@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDate;
@@ -17,18 +18,13 @@ import java.util.List;
 
 /**
  * Controller class that handles HTTP requests related to cryptocurrency trading.
- * It exposes three endpoints:
- * <ul>
- *     <li>Get trading statistics for a specific cryptocurrency symbol.</li>
- *     <li>Get a sorted list of cryptocurrencies by their normalized range.</li>
- *     <li>Get the cryptocurrency with the highest normalized range for a specific day.</li>
- * </ul>
  * This class also provides exception handling for invalid inputs.
  *
  * @author lioannidis
  * @version 0.1
  */
 @RestController
+@RequestMapping("/api")
 public class Controller {
 
     private static final Logger logger = LoggerFactory.getLogger(Controller.class);
@@ -42,7 +38,7 @@ public class Controller {
      * Endpoint to get trading statistics for a given cryptocurrency symbol.
      *
      * @param symbol the cryptocurrency symbol
-     * @return a ResponseEntity containing the statistics DTO, or a 404 if not found
+     * @return a {@link ResponseEntity} containing the statistics DTO, or a 404 if not found
      */
     @GetMapping("/{symbol}")
     public ResponseEntity<StatisticsDTO> getTradingStats(@PathVariable String symbol) {
@@ -53,9 +49,9 @@ public class Controller {
     }
 
     /**
-     * Endpoint to get a list of all cryptocurrencies sorted by their normalized range.
+     * Endpoint to get a list of all cryptocurrencies sorted by their normalized range desc.
      *
-     * @return a list of CryptoNormalizedRangeDTO objects
+     * @return a list of {@link CryptoNormalizedRangeDTO} objects
      */
     @GetMapping("/normalized-range")
     public List<CryptoNormalizedRangeDTO> getNormalizedRangeDesc() {
@@ -67,8 +63,8 @@ public class Controller {
      * Endpoint to get the cryptocurrency with the highest normalized range for a specific date.
      *
      * @param date the date in 'yyyy-MM-dd' format
-     * @return a ResponseEntity containing the CryptoNormalizedRangeDTO for the highest normalized range on that date,
-     *         or a 404 if no data is found
+     * @return a {@link ResponseEntity} containing the {@link CryptoNormalizedRangeDTO} for the
+     * highest normalized range on that date, or a 404 if no data is found
      */
     @GetMapping("/normalized-by-date/{date}")
     public ResponseEntity<CryptoNormalizedRangeDTO> filterByDate(@PathVariable String date) {
